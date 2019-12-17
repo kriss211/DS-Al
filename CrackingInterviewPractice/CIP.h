@@ -49,4 +49,10 @@ public:
 };
 
 void InitializeList(LinkedList&);
+int length(Node*);
 Node* removeDup(Node*);
+Node* returnKth(Node*, int);
+Node* deleteMid(Node*, int);
+Node* partition(Node*, int);
+void sumLists(Node*, Node*);
+bool checkPalindrome(Node*);
