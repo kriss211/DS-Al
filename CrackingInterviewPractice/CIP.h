@@ -48,6 +48,13 @@ public:
 
 };
 
+class intersectionResult
+{
+public:
+	int data;
+	bool isIntersection;
+};
+
 void InitializeList(LinkedList&);
 int length(Node*);
 Node* removeDup(Node*);
@@ -56,3 +63,4 @@ Node* deleteMid(Node*, int);
 Node* partition(Node*, int);
 void sumLists(Node*, Node*);
 bool checkPalindrome(Node*);
+intersectionResult intersection(Node*, Node*);

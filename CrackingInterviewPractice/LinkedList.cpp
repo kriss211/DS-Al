@@ -328,3 +328,82 @@ bool checkPalindrome(Node* head)
 	 return true;
 
 }
+
+
+
+//intersectionResult intersection(Node* head1, Node* head2)
+//{
+//	intersectionResult result;
+//	int len1 = length(head1);
+//	int len2 = length(head2);
+//	int sumlen = len1 + len2;
+//	Node* cursor1 = head1;
+//	Node* cursor2 = head2;
+//	while (cursor1 != cursor2 && sumlen >= 0)
+//	{
+//		if (cursor1 != nullptr)
+//		{
+//			cursor1 = cursor1->next;
+//		}
+//		else
+//		{
+//			cursor1 = head2;
+//		}
+//		if (cursor2 != nullptr)
+//		{
+//			cursor2 = cursor2->next;
+//		}
+//		else
+//		{
+//			cursor2 = head1;
+//		}
+//		sumlen--;
+//	}
+//	if (sumlen >= 0)
+//	{
+//		result.isIntersection = true;
+//		result.data = cursor1->data;
+//	}
+//	else
+//	{
+//		result.isIntersection = false;
+//	}
+//	return result;
+//}
+
+/*solution2: find lenght of 2 list; traverse the longer list when cut off number of node that equal to diff len between 2 node*/
+intersectionResult intersection(Node* head1, Node* head2)
+{
+	intersectionResult result;
+	int len1 = length(head1);
+	int len2 = length(head2);
+
+	Node* clonger = len1 > len2 ? head1 : head2;
+	Node* cshorter = len1 > len2 ? head2 : head1;
+
+	int difflen = abs(len1 - len2);
+
+	while (difflen > 0)
+	{
+		clonger = clonger->next;
+		difflen--;
+	}
+
+	while (clonger != cshorter && clonger != nullptr)
+	{
+		clonger = clonger->next;
+		cshorter = cshorter->next;
+	}
+	
+
+	if (clonger != nullptr)
+	{
+		result.isIntersection = true;
+		result.data = clonger->data;
+	}
+	else
+	{
+		result.isIntersection = false;
+	}
+	return result;
+}
