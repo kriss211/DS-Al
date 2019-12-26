@@ -55,6 +55,13 @@ public:
 	bool isIntersection;
 };
 
+class loopdectecResult
+{
+public:
+	Node* node;
+	bool isLoop;
+};
+
 void InitializeList(LinkedList&);
 int length(Node*);
 Node* removeDup(Node*);
@@ -64,3 +71,39 @@ Node* partition(Node*, int);
 void sumLists(Node*, Node*);
 bool checkPalindrome(Node*);
 intersectionResult intersection(Node*, Node*);
+Node* reverseUseStack(Node*);
+
+/*Stack*/
+class selfStack
+{
+public:
+	class stackNode
+	{
+	public: 
+		int data;
+		int min;
+		stackNode* next;
+
+		stackNode(int data)
+		{
+			this->min = data;
+			this->data = data;
+			this->next = nullptr;
+		}
+	};
+
+	stackNode* head;
+	selfStack()
+	{
+		this->head = nullptr;
+	}
+
+	bool isEmpty();
+	stackNode* Peek();
+	void Push(int);
+	stackNode* Pop();
+	int Min();
+};
+
+void checkMin();
+bool balanceParenthesis(string);

@@ -1,3 +1,4 @@
-﻿  LinkedList.cpp
-f:\coding\crackinginterview\crackinginterviewpractice\crackinginterviewpractice\linkedlist.cpp(54): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+﻿  Stack.cpp
+f:\coding\crackinginterview\crackinginterviewpractice\crackinginterviewpractice\stack.cpp(22): warning C4018: '<': signed/unsigned mismatch
+f:\coding\crackinginterview\crackinginterviewpractice\crackinginterviewpractice\stack.cpp(84): warning C4715: 'selfStack::Pop': not all control paths return a value
   CrackingInterviewPractice.vcxproj -> F:\Coding\CrackingInterview\CrackingInterviewPractice\Debug\CrackingInterviewPractice.exe

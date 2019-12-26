@@ -3,11 +3,10 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <stack>
 #include "CIP.h"
 
 using namespace std;
-
-
 
 void LinkedList:: insert(int data)
 {
@@ -56,6 +55,56 @@ int convertToNum(Node* head, int lenList)
 		i++;
 	}
 	return num;
+}
+
+Node* reverseList(Node* head)
+{
+	if (head->next == nullptr || head == nullptr)
+	{
+		return head;
+	}
+	Node* newhead = reverseList(head->next);
+	head->next->next = head;
+	head->next = nullptr;
+	return newhead;
+}
+
+Node* copyList(Node* oldHead, Node* newHead)
+{
+	while (oldHead != nullptr)
+	{
+
+		Node* newNode = new Node(oldHead->data);
+		Node* cursor = newHead;
+		if (newHead == nullptr)
+		{
+			newHead = newNode;
+		}
+		else
+		{
+			while (cursor->next != nullptr)
+			{
+				cursor = cursor->next;
+			}
+			cursor->next = newNode;
+		}
+		oldHead = oldHead->next;
+	}
+	return newHead;
+}
+
+/*Create a new node and insert at head*/
+Node* reverseAndClone(Node* head)
+{
+	Node* newHead = nullptr;
+	while (head != nullptr)
+	{
+		Node* newNode = new Node(head->data);
+		newNode->next = newHead;
+		newHead = newNode;
+		head = head->next;
+	}
+	return newHead;
 }
 
 void InitializeList(LinkedList& lList)
@@ -305,31 +354,52 @@ void sumLists(Node* numList1, Node* numList2)
 	}
 }
 
+/*Solution 1: list 0 1 2 3 4
+check 0 with 4 and 1 with 3 ....*/
+//bool checkPalindrome(Node* head)
+//{
+//	 int len = length(head);
+//	 int interateList = 1;
+//	 int decreaseLoop = 1;
+//
+//	 while (len > len / 2)
+//	 {
+//		 Node* cursor = head;
+//		 interateList = decreaseLoop;
+//		 while (interateList < len)
+//		 {
+//			 cursor = cursor->next;
+//			 interateList++;
+//		 }
+//		 if (head->data != cursor->data) return false;
+//		 head = head->next;
+//		 decreaseLoop++;
+//		 len--;
+//	 }
+//	 return true;
+//
+//}
+
+/*Solution 2: create a reverse list and check the first half original with reverse list*/
 bool checkPalindrome(Node* head)
 {
-	 int len = length(head);
-	 int interateList = 1;
-	 int decreaseLoop = 1;
+	int len = length(head);
+	Node* reverseHead = nullptr;
+	reverseHead = copyList(head, reverseHead);
+	reverseHead = reverseList(reverseHead);
 
-	 while (len > len / 2)
-	 {
-		 Node* cursor = head;
-		 interateList = decreaseLoop;
-		 while (interateList < len)
-		 {
-			 cursor = cursor->next;
-			 interateList++;
-		 }
-		 if (head->data != cursor->data) return false;
-		 head = head->next;
-		 decreaseLoop++;
-		 len--;
-	 }
-	 return true;
+	for (int i = 0; i < len / 2; i++)
+	{
+		if (head->data != reverseHead->data)
+		{
+			return false;
+		}
+		head = head->next;
+		reverseHead = reverseHead->next;
+	}
 
+	return true;
 }
-
-
 
 //intersectionResult intersection(Node* head1, Node* head2)
 //{
@@ -406,4 +476,64 @@ intersectionResult intersection(Node* head1, Node* head2)
 		result.isIntersection = false;
 	}
 	return result;
+}
+
+/*Solution: head and collision node are both k node from begin of loop
+So if move 1 slownode and faster (2 time faster) at same time we can find the collision point-> move slower to head and start
+move 2 slower and faster at same speed they will meet again at  start loop*/
+loopdectecResult loopDetection(Node* head)
+{
+	Node* slower = head;
+	Node* faster = head;
+	loopdectecResult Res;
+	while (faster != nullptr && faster->next != nullptr)
+	{
+		if (faster == slower)
+		{
+			break;
+		}
+		slower = slower->next;
+		faster = faster->next->next;
+	}
+
+	if (faster == nullptr || faster->next != nullptr)
+	{
+		Res.node = head;
+		Res.isLoop = false;
+	}
+
+	slower = head;
+
+	while (slower != faster)
+	{
+		slower = slower->next;
+		faster = faster->next;
+	}
+	Res.node = faster;
+	Res.isLoop = true;
+	return Res;
+
+}
+
+Node* reverseUseStack(Node* head)
+{
+	if (head == nullptr) return head;
+	Node* cursor = head;
+	stack<Node*> S;
+	while (cursor != nullptr)
+	{
+		S.push(cursor);
+		cursor = cursor->next;
+	}
+	cursor = S.top();
+	head = cursor;
+	S.pop();
+	while (!S.empty())
+	{
+		cursor->next = S.top();
+		S.pop();
+		cursor = cursor->next;
+	}
+	cursor->next = nullptr;
+	return head;
 }
