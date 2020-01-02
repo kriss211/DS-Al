@@ -40,6 +40,8 @@ bool balanceParenthesis(string s)
 	else return false;
 }
 
+/*check min: every node will has another property is min which store the smallest value 
+from this node to the first node*/
 bool selfStack::isEmpty()
 {
 	return head == nullptr;
@@ -106,4 +108,32 @@ void checkMin()
 	cout << "Min is:" << Stack.Min() << '\n';
 	Stack.Pop();
 	cout << "Min is:" << Stack.Min() << '\n';
+}
+
+void checkSetOfStack()
+{
+	SetOfStack sos = SetOfStack();
+	SetOfStack::handmadeStack stackNo = SetOfStack::handmadeStack();
+	/*first stack*/
+	sos.headOfSet = sos.PushToStack(sos.headOfSet,5);
+	cout << "First stack push 1st:" << sos.TopOfStack(sos.headOfSet) << "\n";
+	cout << "Address of first stack: " << sos.headOfSet << "\n";
+	sos.headOfSet = sos.PushToStack(sos.headOfSet, 6);
+	cout << "First stack push 1st:" << sos.TopOfStack(sos.headOfSet) << "\n";
+	cout << "Address of first stack: " << sos.headOfSet << "\n";
+	/*Second stack*/
+	sos.headOfSet = sos.PushToStack(sos.headOfSet, 4);
+	cout << "Second stack push 2rd:" << sos.TopOfStack(sos.headOfSet) << "\n";
+	cout << "Address of second stack: " << sos.headOfSet << "\n";
+	sos.headOfSet = sos.PushToStack(sos.headOfSet, 3);
+	cout << "Second stack push 2rd:" << sos.TopOfStack(sos.headOfSet) << "\n";
+	cout << "Address of second stack: " << sos.headOfSet << "\n";
+
+	sos.headOfSet = sos.PopFromStack(sos.headOfSet);
+	cout << sos.TopOfStack(sos.headOfSet) << "\n";
+	sos.headOfSet = sos.PopFromStack(sos.headOfSet);
+	cout << sos.TopOfStack(sos.headOfSet) << "\n";
+	sos.headOfSet = sos.PopFromStack(sos.headOfSet);
+	cout << sos.TopOfStack(sos.headOfSet) << "\n";
+
 }
