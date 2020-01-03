@@ -42,6 +42,11 @@ bool balanceParenthesis(string s)
 
 /*check min: every node will has another property is min which store the smallest value 
 from this node to the first node*/
+selfStack::selfStack()
+{
+	this->head = nullptr;
+}
+
 bool selfStack::isEmpty()
 {
 	return head == nullptr;
@@ -110,27 +115,161 @@ void checkMin()
 	cout << "Min is:" << Stack.Min() << '\n';
 }
 
+/*Set of stack: create Set of stack as a big stack which contain stack*/
+
+SetOfStack::handmadeStack::NodeStack::NodeStack(int data)
+{
+	this->data = data;
+	this->next = nullptr;
+}
+
+SetOfStack::handmadeStack::handmadeStack()
+{
+	this->size = 0;
+	this->nextStack = nullptr;
+	this->headOfStack = nullptr;
+}
+
+SetOfStack::SetOfStack()
+{
+	this->capacity = 3;
+	headOfSet = nullptr;
+
+}
+
+bool SetOfStack::isSetEmpty()
+{
+	return headOfSet == nullptr;
+}
+
+bool SetOfStack::isStackFull(handmadeStack* stackNo)
+{
+	return stackNo->size == this->capacity;
+}
+
+SetOfStack::handmadeStack* SetOfStack::PushToStack(handmadeStack* headSet, int data)
+{
+
+	handmadeStack::NodeStack* newNode = new handmadeStack::NodeStack(data);
+	/*if Set empty create a new one*/
+	if (isSetEmpty())
+	{
+		handmadeStack* newStack = new handmadeStack();
+		headSet = newStack;
+	}
+	/*if current stack is full create a new one*/
+	if (isStackFull(headSet))
+	{
+		handmadeStack* newStack = new handmadeStack();
+		newStack->nextStack = headSet;
+		headSet = newStack;
+	}
+	/*Add new node to stack(add at head in linkedlist) + increase size*/
+	newNode->next = headSet->headOfStack;
+	headSet->headOfStack = newNode;
+	headSet->size++;
+	return headSet;
+}
+
+SetOfStack::handmadeStack* SetOfStack::PopFromStack(handmadeStack* headSet)
+{
+	/*if stack is empty and set is empty return nullptr*/
+	if (headSet->headOfStack == nullptr)
+	{
+		if (headSet->nextStack == nullptr) return nullptr;
+
+		/*assign head of set to next stack*/
+		else
+		{
+			handmadeStack* deleteStack = headSet;
+			headSet = headSet->nextStack;
+			delete deleteStack;
+		}
+	}
+	handmadeStack::NodeStack* deleteNode = headSet->headOfStack;
+	headSet->headOfStack = headSet->headOfStack->next;
+	headSet->size--;
+	delete deleteNode;
+	/*After pop if this stack is empty assign head set to next stack*/
+	if (headSet->headOfStack == nullptr)
+	{
+		headSet = headSet->nextStack;
+	}
+	return headSet;
+}
+
+int SetOfStack::TopOfStack(handmadeStack* headSet)
+{
+	if (headSet->headOfStack == nullptr)
+	{
+		cout << "Stack is empty";
+		return -1;
+	}
+
+	return headSet->headOfStack->data;
+}
+
+SetOfStack::handmadeStack* SetOfStack::PopAt(handmadeStack* headSet, int index)
+{
+	int step = headSet->size - 1 - index;
+	SetOfStack::handmadeStack::NodeStack* cursorStack = headSet->headOfStack;
+	SetOfStack::handmadeStack::NodeStack* preCursorStack = nullptr;
+
+	while (step > 0)
+	{
+		preCursorStack = cursorStack;
+		cursorStack = cursorStack->next;
+		step--;
+	}
+	preCursorStack->next = cursorStack->next;
+	delete cursorStack;
+	return headSet;
+}
+
+
 void checkSetOfStack()
 {
 	SetOfStack sos = SetOfStack();
 	SetOfStack::handmadeStack stackNo = SetOfStack::handmadeStack();
 	/*first stack*/
-	sos.headOfSet = sos.PushToStack(sos.headOfSet,5);
-	cout << "First stack push 1st:" << sos.TopOfStack(sos.headOfSet) << "\n";
+	sos.headOfSet = sos.PushToStack(sos.headOfSet,8);
+	cout << "First stack push:" << sos.TopOfStack(sos.headOfSet) << "\n";
+	cout << "Address of first stack: " << sos.headOfSet << "\n";
+	sos.headOfSet = sos.PushToStack(sos.headOfSet, 7);
+	cout << "First stack push:" << sos.TopOfStack(sos.headOfSet) << "\n";
 	cout << "Address of first stack: " << sos.headOfSet << "\n";
 	sos.headOfSet = sos.PushToStack(sos.headOfSet, 6);
-	cout << "First stack push 1st:" << sos.TopOfStack(sos.headOfSet) << "\n";
+	cout << "First stack push:" << sos.TopOfStack(sos.headOfSet) << "\n";
 	cout << "Address of first stack: " << sos.headOfSet << "\n";
 	/*Second stack*/
+	sos.headOfSet = sos.PushToStack(sos.headOfSet, 5);
+	cout << "Second stack push :" << sos.TopOfStack(sos.headOfSet) << "\n";
+	cout << "Address of second stack: " << sos.headOfSet << "\n";
 	sos.headOfSet = sos.PushToStack(sos.headOfSet, 4);
-	cout << "Second stack push 2rd:" << sos.TopOfStack(sos.headOfSet) << "\n";
+	cout << "Second stack push :" << sos.TopOfStack(sos.headOfSet) << "\n";
 	cout << "Address of second stack: " << sos.headOfSet << "\n";
 	sos.headOfSet = sos.PushToStack(sos.headOfSet, 3);
-	cout << "Second stack push 2rd:" << sos.TopOfStack(sos.headOfSet) << "\n";
+	cout << "Second stack push :" << sos.TopOfStack(sos.headOfSet) << "\n";
 	cout << "Address of second stack: " << sos.headOfSet << "\n";
+	/*third*/
+	sos.headOfSet = sos.PushToStack(sos.headOfSet, 2);
+	cout << "Third stack push :" << sos.TopOfStack(sos.headOfSet) << "\n";
+	cout << "Address of third stack: " << sos.headOfSet << "\n";
+	sos.headOfSet = sos.PushToStack(sos.headOfSet, 1);
+	cout << "Third stack push :" << sos.TopOfStack(sos.headOfSet) << "\n";
+	cout << "Address of third stack: " << sos.headOfSet << "\n";
+	sos.headOfSet = sos.PushToStack(sos.headOfSet, 0);
+	cout << "Third stack push :" << sos.TopOfStack(sos.headOfSet) << "\n";
+	cout << "Address of third stack: " << sos.headOfSet << "\n";
 
+	sos.headOfSet = sos.PopAt(sos.headOfSet, 2);
+	cout << sos.TopOfStack(sos.headOfSet) << "\n";
 	sos.headOfSet = sos.PopFromStack(sos.headOfSet);
 	cout << sos.TopOfStack(sos.headOfSet) << "\n";
+	sos.headOfSet = sos.PopFromStack(sos.headOfSet);
+	cout << sos.TopOfStack(sos.headOfSet) << "\n";
+	sos.headOfSet = sos.PopFromStack(sos.headOfSet);
+	cout << sos.TopOfStack(sos.headOfSet) << "\n";	
 	sos.headOfSet = sos.PopFromStack(sos.headOfSet);
 	cout << sos.TopOfStack(sos.headOfSet) << "\n";
 	sos.headOfSet = sos.PopFromStack(sos.headOfSet);

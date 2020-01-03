@@ -93,11 +93,8 @@ public:
 	};
 
 	stackNode* head;
-	selfStack()
-	{
-		this->head = nullptr;
-	}
-
+	selfStack();
+	
 	bool isEmpty();
 	stackNode* Peek();
 	void Push(int);
@@ -124,93 +121,24 @@ public:
 			int data;
 			NodeStack* next;
 
-			NodeStack(int data)
-			{
-				this->data = data;
-				this->next = nullptr;
-			}
+			NodeStack(int);
 
 		};
 		NodeStack* headOfStack;
-		handmadeStack()
-		{
-			this->size = 0;
-			this->nextStack = nullptr;
-			this->headOfStack = nullptr;
-		}
-
+		handmadeStack();
+		
 	};
 
 	int capacity;
 	handmadeStack* headOfSet;
 
-	SetOfStack()
-	{
-		this->capacity = 2;
-		headOfSet = nullptr;
-	}
+	SetOfStack();
+	bool isSetEmpty();
+	bool isStackFull(handmadeStack*);
+	handmadeStack* PushToStack(handmadeStack*, int);
+	handmadeStack* PopFromStack(handmadeStack*);
+	int TopOfStack(handmadeStack*);
+	handmadeStack* PopAt(handmadeStack*, int);
 
-	bool isSetEmpty()
-	{
-		return headOfSet == nullptr;
-	}
 
-	bool isStackFull(handmadeStack* stackNo)
-	{
-		return stackNo->size == this->capacity;
-	}
-
-	handmadeStack* PushToStack(handmadeStack* headSet, int data)
-	{
-		handmadeStack::NodeStack* newNode = new handmadeStack::NodeStack(data);
-		if (isSetEmpty())
-		{
-			handmadeStack* newStack = new handmadeStack();
-			headSet = newStack;
-		}
-		if (isStackFull(headSet))
-		{
-			handmadeStack* newStack = new handmadeStack();
-			newStack->nextStack = headSet;
-			headSet = newStack;
-		}
-		newNode->next = headSet->headOfStack;
-		headSet->headOfStack = newNode;
-		headSet->size++;
-		return headSet;
-	}
-
-	handmadeStack* PopFromStack(handmadeStack* headSet)
-	{
-		if (headSet->headOfStack == nullptr)
-		{
-			if (headSet->nextStack == nullptr) return nullptr;
-			else
-			{
-				handmadeStack* deleteStack = headSet;
-				headSet = headSet->nextStack;
-				delete deleteStack;
-			}
-		}
-		handmadeStack::NodeStack* deleteNode = headSet->headOfStack;
-		headSet->headOfStack = headSet->headOfStack->next;
-		headSet->size--;
-		delete deleteNode;
-		if (headSet->headOfStack == nullptr)
-		{
-			headSet = headSet->nextStack;
-		}
-		return headSet;
-	}
-
-	int TopOfStack(handmadeStack* headSet)
-	{
-		if (headSet->headOfStack == nullptr)
-		{
-			cout << "Stack is empty";
-			return -1;
-		}
-		
-		return headSet->headOfStack->data;
-	}
 };
