@@ -211,6 +211,11 @@ int SetOfStack::TopOfStack(handmadeStack* headSet)
 
 SetOfStack::handmadeStack* SetOfStack::PopAt(handmadeStack* headSet, int index)
 {
+	if (index == headSet->size)
+	{
+		cout << "Position is out of range\n";
+		return headSet;
+	}
 	int step = headSet->size - 1 - index;
 	SetOfStack::handmadeStack::NodeStack* cursorStack = headSet->headOfStack;
 	SetOfStack::handmadeStack::NodeStack* preCursorStack = nullptr;
@@ -221,7 +226,10 @@ SetOfStack::handmadeStack* SetOfStack::PopAt(handmadeStack* headSet, int index)
 		cursorStack = cursorStack->next;
 		step--;
 	}
-	preCursorStack->next = cursorStack->next;
+	if(preCursorStack != nullptr) preCursorStack->next = cursorStack->next;
+	else headSet->headOfStack = cursorStack->next;
+	headSet->size--;
+
 	delete cursorStack;
 	return headSet;
 }
@@ -263,16 +271,18 @@ void checkSetOfStack()
 	cout << "Address of third stack: " << sos.headOfSet << "\n";
 
 	sos.headOfSet = sos.PopAt(sos.headOfSet, 2);
+	//cout << sos.TopOfStack(sos.headOfSet) << "\n";
+	sos.headOfSet = sos.PopAt(sos.headOfSet, 0);
 	cout << sos.TopOfStack(sos.headOfSet) << "\n";
 	sos.headOfSet = sos.PopFromStack(sos.headOfSet);
 	cout << sos.TopOfStack(sos.headOfSet) << "\n";
 	sos.headOfSet = sos.PopFromStack(sos.headOfSet);
 	cout << sos.TopOfStack(sos.headOfSet) << "\n";
-	sos.headOfSet = sos.PopFromStack(sos.headOfSet);
-	cout << sos.TopOfStack(sos.headOfSet) << "\n";	
-	sos.headOfSet = sos.PopFromStack(sos.headOfSet);
-	cout << sos.TopOfStack(sos.headOfSet) << "\n";
-	sos.headOfSet = sos.PopFromStack(sos.headOfSet);
-	cout << sos.TopOfStack(sos.headOfSet) << "\n";
+	//sos.headOfSet = sos.PopFromStack(sos.headOfSet);
+	//cout << sos.TopOfStack(sos.headOfSet) << "\n";	
+	//sos.headOfSet = sos.PopFromStack(sos.headOfSet);
+	//cout << sos.TopOfStack(sos.headOfSet) << "\n";
+	//sos.headOfSet = sos.PopFromStack(sos.headOfSet);
+	//cout << sos.TopOfStack(sos.headOfSet) << "\n";
 
 }
