@@ -234,7 +234,6 @@ SetOfStack::handmadeStack* SetOfStack::PopAt(handmadeStack* headSet, int index)
 	return headSet;
 }
 
-
 void checkSetOfStack()
 {
 	SetOfStack sos = SetOfStack();
@@ -284,5 +283,109 @@ void checkSetOfStack()
 	//cout << sos.TopOfStack(sos.headOfSet) << "\n";
 	//sos.headOfSet = sos.PopFromStack(sos.headOfSet);
 	//cout << sos.TopOfStack(sos.headOfSet) << "\n";
+
+}
+
+/*Queue with 2 stack*/
+
+myQueue::myQueue()
+{
+	oldestStack = stack<int>();
+	newestStack = stack<int>();
+
+}
+
+void myQueue::transferStack()
+{
+	while (!newestStack.empty())
+	{
+		oldestStack.push(newestStack.top());
+		newestStack.pop();
+	}
+}
+
+void myQueue::Enqueue(int data)
+{
+	newestStack.push(data);
+}
+
+int myQueue::Dequeue()
+{
+	int ret = -1;
+	if (oldestStack.empty()) transferStack();
+	ret = oldestStack.top();
+	oldestStack.pop();
+	return ret;
+}
+
+void checkMyQueue()
+{
+	myQueue Queue;
+	Queue.Enqueue(1);
+	Queue.Enqueue(2);
+	Queue.Enqueue(3);
+	Queue.Enqueue(4);
+
+	cout << "Dequeue: " << Queue.Dequeue() << "\n";
+	cout << "Dequeue: " << Queue.Dequeue() << "\n";
+	cout << "Dequeue: " << Queue.Dequeue() << "\n";
+
+}
+
+/*O(n^2) time and O(n) space: push the top ele from raw to sorted
+, check the top of these 2:
+if: raw.top > sorted > top => push it into sorted
+else: */
+
+stack<int> sortStack(stack<int> rawStack)
+{
+	int temp = 0;
+	stack<int> sortedStack = stack<int>();
+	if (sortedStack.empty())
+	{
+		sortedStack.push(rawStack.top());
+		rawStack.pop();
+	}
+	while (!rawStack.empty())
+	{
+		if (rawStack.top() < sortedStack.top())
+		{
+			sortedStack.push(rawStack.top());
+			rawStack.pop();
+		}
+		else
+		{
+			temp = rawStack.top();
+			rawStack.pop();
+			while (!sortedStack.empty() &&temp > sortedStack.top())
+			{
+				rawStack.push(sortedStack.top());
+				sortedStack.pop();
+			}
+			sortedStack.push(temp);
+		}
+	}
+	return sortedStack;
+}
+void checkSortStack()
+{
+	stack<int> testStack = stack<int>();
+	testStack.push(2);
+	testStack.push(6);
+	testStack.push(1);
+	testStack.push(7);
+	testStack.push(3);
+	testStack.push(8);
+	testStack.push(5);
+	testStack.push(9);
+	testStack.push(4);
+	testStack.push(10);
+	testStack = sortStack(testStack);
+	cout << "Stack after sorted: ";
+	while (!testStack.empty())
+	{
+		cout << testStack.top() << " ";
+		testStack.pop();
+	}
 
 }

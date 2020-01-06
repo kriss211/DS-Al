@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <stack>
 
 using namespace std;
 
@@ -106,8 +107,6 @@ void checkMin();
 bool balanceParenthesis(string);
 void checkSetOfStack();
 
-
-
 class SetOfStack
 {
 public:
@@ -142,3 +141,21 @@ public:
 
 
 };
+
+class myQueue
+{
+public:
+	stack<int> oldestStack, newestStack;
+	myQueue();
+	
+	void transferStack();
+	void Enqueue(int);
+	int Dequeue();
+};
+void checkMyQueue();
+
+stack<int> sortStack(stack<int>);
+void checkSortStack();
+
+
+
