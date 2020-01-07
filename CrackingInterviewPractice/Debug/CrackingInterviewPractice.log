@@ -1,4 +1,2 @@
-﻿  Stack.cpp
-f:\coding\crackinginterview\crackinginterviewpractice\crackinginterviewpractice\stack.cpp(22): warning C4018: '<': signed/unsigned mismatch
-f:\coding\crackinginterview\crackinginterviewpractice\crackinginterviewpractice\stack.cpp(91): warning C4715: 'selfStack::Pop': not all control paths return a value
+﻿  Queue.cpp
   CrackingInterviewPractice.vcxproj -> F:\Coding\CrackingInterview\CrackingInterviewPractice\Debug\CrackingInterviewPractice.exe

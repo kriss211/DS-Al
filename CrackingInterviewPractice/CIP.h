@@ -157,5 +157,43 @@ void checkMyQueue();
 stack<int> sortStack(stack<int>);
 void checkSortStack();
 
+/*Queue*/
+class catNode
+{
+public:
+	int order;
+	catNode* next;
+	catNode();
+};
+
+class dogNode
+{
+public:
+	int order;
+	dogNode* next;
+	dogNode();
+};
+
+enum petType {cat, dog};
+
+class petQueue
+{
+public:
+	int totalPet;
+	
+	catNode* headCat;
+	catNode* tailCat;
+	
+	dogNode* headDog;
+	dogNode* tailDog;
+
+	petQueue();
+	void enqueue(petType);
+	void dequeueAny();
+	void dequeueCat();
+	void dequeueDog();
+};
+
+void checkPetQueue();
 
 
